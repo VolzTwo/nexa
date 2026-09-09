@@ -1,1 +1,772 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NEXA - AI Daily Assistant | Smart Priority & Adaptive Planning</title>
+  <meta name="description" content="NEXA adalah asisten AI harian yang menganalisis situasi, menentukan prioritas, dan membuat rencana kegiatan adaptif yang realistis untuk hidup produktif.">
+  <meta name="keywords" content="AI Daily Assistant, Task Planner, Smart Scheduling, Adaptive Planning, NEXA">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons for clean modern UI -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <!-- Background Glow Accents -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
 
+  <!-- Main Container -->
+  <div class="app-layout">
+    <!-- Sidebar / Navigation (Desktop & Tablet) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-container">
+        <div class="brand-logo">
+          <div class="logo-icon">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">NEXA</span>
+            <span class="brand-tag">AI ASSISTANT</span>
+          </div>
+        </div>
+        <button class="mobile-close-btn" id="mobileCloseSidebar" aria-label="Tutup Menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="dashboard" id="navDashboard">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-tab="planner" id="navPlanner">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>AI Planner</span>
+          <span class="nav-pill">Smart</span>
+        </button>
+        <button class="nav-item" data-tab="schedule" id="navSchedule">
+          <i class="fa-solid fa-calendar-day"></i>
+          <span>Today's Plan</span>
+          <span class="badge-count" id="activeTasksBadge">0</span>
+        </button>
+        <button class="nav-item" data-tab="tasks" id="navTasks">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Daftar Tugas</span>
+        </button>
+        <button class="nav-item" data-tab="ask" id="navAsk">
+          <i class="fa-solid fa-comments"></i>
+          <span>Ask NEXA</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+      <div class="mobile-brand">
+        <div class="mobile-logo-icon">
+          <i class="fa-solid fa-brain"></i>
+        </div>
+        <div class="mobile-brand-info">
+          <span class="mobile-brand-title">NEXA</span>
+          <span class="mobile-brand-sub">AI Assistant</span>
+        </div>
+      </div>
+      <div class="mobile-header-actions">
+        <button class="btn btn-sm btn-primary" id="mobileBtnAddTask" title="Tambah Tugas">
+          <i class="fa-solid fa-plus"></i>
+          <span>Tugas</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Bar (Desktop / Tablet) -->
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <h1 class="page-title" id="pageTitle">Dashboard</h1>
+          <p class="page-subtitle" id="pageSubtitle">Selamat datang kembali! Mari optimalkan harimu bersama AI.</p>
+        </div>
+        <div class="top-bar-right">
+          <div class="date-chip" id="currentDateChip">
+            <i class="fa-regular fa-calendar"></i>
+            <span id="currentDateText">Loading...</span>
+          </div>
+          <button class="btn btn-secondary btn-icon" id="btnQuickAsk" title="Konsultasi Cepat AI">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Ask NEXA</span>
+          </button>
+          <button class="btn btn-primary" id="btnAddTaskModal">
+            <i class="fa-solid fa-plus"></i>
+            <span>Tambah Tugas</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 1: DASHBOARD -->
+      <section class="tab-content active" id="tab-dashboard">
+        <!-- Hero Greeting Card -->
+        <div class="greeting-banner">
+          <div class="greeting-content">
+            <div class="greeting-badge">
+              <i class="fa-solid fa-sparkles"></i> AI Daily Intelligence
+            </div>
+            <h2 class="greeting-title" id="greetingText">Hari ini mau menyelesaikan apa? 👋</h2>
+            <p class="greeting-desc">NEXA siap menganalisis energimu, deadline terdekat, dan menyusun jadwal yang paling realistis.</p>
+            <div class="greeting-actions">
+              <button class="btn btn-primary" id="btnHeroPlanner">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Mulai Buat Rencana AI</span>
+              </button>
+              <button class="btn btn-glass" id="btnHeroAddTask">
+                <i class="fa-solid fa-plus"></i>
+                <span>Tambah Tugas Baru</span>
+              </button>
+            </div>
+          </div>
+          <div class="greeting-graphic">
+            <div class="ai-orb">
+              <div class="orb-inner"></div>
+              <i class="fa-solid fa-bolt orb-icon"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric Statistics Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon-wrapper icon-blue">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Total Tugas Hari Ini</span>
+              <span class="stat-value" id="statTotalTasks">0</span>
+              <span class="stat-subtext" id="statTasksPending">0 belum selesai</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper icon-rose">
+              <i class="fa-solid fa-fire"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Prioritas Tinggi</span>
+              <span class="stat-value" id="statHighPriority">0</span>
+              <span class="stat-subtext text-warning" id="statHighPrioritySub">Perlu perhatian utama</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper icon-emerald">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Progress Harian</span>
+              <div class="stat-value-progress">
+                <span class="stat-value" id="statProgressPct">0%</span>
+                <span class="stat-count" id="statProgressFraction">0/0 Selesai</span>
+              </div>
+              <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="dashboardProgressBar" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper icon-cyan">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Waktu Produktif Rencana</span>
+              <span class="stat-value" id="statAvailableTime">0m</span>
+              <span class="stat-subtext" id="statAvailableTimeSub">Berdasarkan timeline aktif</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Split Grid -->
+        <div class="dashboard-grid">
+          <!-- Left Column: Next Up Widget & AI Reason Insight -->
+          <div class="dashboard-col">
+            <!-- Next Up Activity Widget -->
+            <div class="glass-card next-up-card">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <i class="fa-solid fa-bullseye text-primary"></i>
+                  <h3>Aktivitas Berikutnya (Next Up)</h3>
+                </div>
+                <span class="badge badge-pulse" id="nextUpStatusBadge">Aktif</span>
+              </div>
+              <div class="card-body" id="nextUpContainer">
+                <!-- Injected via JS -->
+                <div class="empty-state-small">
+                  <i class="fa-regular fa-calendar-plus"></i>
+                  <p>Belum ada rencana jadwal aktif untuk hari ini.</p>
+                  <button class="btn btn-sm btn-primary" id="btnQuickPlanNow">Buat Jadwal dengan AI</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI Reason Insight Box -->
+            <div class="glass-card ai-insight-card">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <i class="fa-solid fa-brain text-accent"></i>
+                  <h3>Mengapa Prioritas Ini? (AI Reasoning)</h3>
+                </div>
+                <span class="badge badge-cyan">NEXA Insight</span>
+              </div>
+              <div class="card-body" id="aiReasoningDashboard">
+                <p class="text-muted">NEXA akan memberikan alasan ilmiah dan manajemen waktu mengapa suatu tugas harus dikerjakan terlebih dahulu setelah analisis dibuat.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Today's Timeline Snippet -->
+          <div class="dashboard-col">
+            <div class="glass-card">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <i class="fa-solid fa-timeline text-indigo"></i>
+                  <h3>Jadwal Hari Ini (Timeline)</h3>
+                </div>
+                <button class="btn-link" id="btnViewFullSchedule">Lihat Detail <i class="fa-solid fa-arrow-right"></i></button>
+              </div>
+              <div class="card-body">
+                <div class="timeline-preview-list" id="dashboardTimelinePreview">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: AI PLANNER -->
+      <section class="tab-content" id="tab-planner">
+        <div class="planner-layout">
+          <!-- Planner Input Card -->
+          <div class="glass-card planner-input-card">
+            <div class="card-header">
+              <div class="card-title-group">
+                <div class="icon-avatar">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <div>
+                  <h3>AI Situation Analysis & Smart Planner</h3>
+                  <p class="card-subtitle">Ceritakan situasimu, beban tugas, waktu yang kamu miliki, dan kondisimu saat ini.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <!-- Quick Scenario Chips -->
+              <div class="scenario-section">
+                <label class="section-label"><i class="fa-solid fa-bolt text-warning"></i> Skenario Cepat (Klik untuk Demo):</label>
+                <div class="scenario-chips">
+                  <button class="chip-btn" data-scenario="exam">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Besok Ujian Matematika (16:00 - 19:00)</span>
+                  </button>
+                  <button class="chip-btn" data-scenario="urgent1hr">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                    <span>Hanya Punya Waktu 1 Jam Malam Ini</span>
+                  </button>
+                  <button class="chip-btn" data-scenario="tired">
+                    <i class="fa-solid fa-bed"></i>
+                    <span>Sedang Lelah tapi Ada Tugas Besok</span>
+                  </button>
+                  <button class="chip-btn" data-scenario="project">
+                    <i class="fa-solid fa-code"></i>
+                    <span>Deadline Proyek Coding & Kelompok</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Main Situation Textarea -->
+              <div class="form-group">
+                <label for="situationInput" class="form-label">
+                  <span>Input Situasi & Kondisi Kamu:</span>
+                  <span class="label-hint">Bahasa alami sehari-hari</span>
+                </label>
+                <textarea id="situationInput" class="form-control" rows="4" placeholder="Contoh: Besok aku ada ujian matematika. Aku belum belajar sama sekali. Pulang sekolah jam 4 sore dan jam 7 malam ada acara keluarga. Tolong buatkan jadwal yang realistis..."></textarea>
+              </div>
+
+              <!-- Extra Context Options -->
+              <div class="context-grid">
+                <div class="form-group">
+                  <label class="form-label" for="energyLevelSelect"><i class="fa-solid fa-battery-half text-emerald"></i> Energi / Kondisi:</label>
+                  <select id="energyLevelSelect" class="form-control">
+                    <option value="NORMAL" selected>Normal / Fokus Standar</option>
+                    <option value="HIGH">Tinggi / Sangat Berenergi</option>
+                    <option value="TIRED">Lelah / Low Energy (Banyak Break)</option>
+                    <option value="STRESSED">Sedikit Tertekan</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="plannerStartTime"><i class="fa-solid fa-clock text-cyan"></i> Waktu Mulai:</label>
+                  <input type="time" id="plannerStartTime" class="form-control" value="16:00">
+                </div>
+              </div>
+
+              <!-- Include Existing Tasks Checkbox -->
+              <div class="checkbox-group">
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="checkIncludeSavedTasks" checked>
+                  <span class="checkmark"></span>
+                  <span class="checkbox-text">Sertakan tugas yang tersimpan ke analisis AI</span>
+                </label>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="planner-actions">
+                <button class="btn btn-primary btn-lg" id="btnAnalyzePlan">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i>
+                  <span>Analisis & Buat Rencana</span>
+                </button>
+                <button class="btn btn-secondary" id="btnClearSituation">
+                  <i class="fa-solid fa-rotate-left"></i>
+                  <span>Reset</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Loading & Analysis Result Container -->
+          <div class="planner-result-container" id="plannerResultContainer">
+            <!-- Initial Prompt State -->
+            <div class="empty-state-box" id="plannerInitialState">
+              <div class="empty-icon-pulse">
+                <i class="fa-solid fa-brain"></i>
+              </div>
+              <h3>NEXA Siap Menganalisis</h3>
+              <p>Pilih salah satu skenario demo di atas atau ketik situasimu untuk melihat bagaimana AI memproses beban kerja dan menentukan prioritas kegiatan.</p>
+            </div>
+
+            <!-- Loading State Animation -->
+            <div class="ai-loading-box" id="aiLoadingBox" style="display: none;">
+              <div class="ai-pulsing-circle">
+                <div class="core-dot"></div>
+                <div class="wave wave-1"></div>
+                <div class="wave wave-2"></div>
+                <div class="wave wave-3"></div>
+              </div>
+              <h4 class="loading-title" id="loadingStepText">NEXA is analyzing your situation...</h4>
+              <p class="loading-subtitle">Menghitung constraint waktu, urgensi deadline, dan alokasi break yang optimal.</p>
+              <div class="loading-dots">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+
+            <!-- AI Result Display Card -->
+            <div class="ai-result-card" id="aiResultCard" style="display: none;">
+              <div class="result-header">
+                <div class="result-badge-group">
+                  <span class="badge badge-success"><i class="fa-solid fa-check-circle"></i> Analisis Selesai</span>
+                  <span class="badge badge-priority" id="resultPriorityBadge">HIGH PRIORITY</span>
+                </div>
+                <h3 class="result-summary-title" id="resultSummaryTitle">Persiapan Ujian Matematika</h3>
+              </div>
+
+              <div class="result-stats-row">
+                <div class="res-stat">
+                  <span class="res-stat-label">Total Durasi</span>
+                  <span class="res-stat-val" id="resultTotalTime">135 Menit</span>
+                </div>
+                <div class="res-stat">
+                  <span class="res-stat-label">Jumlah Sesi</span>
+                  <span class="res-stat-val" id="resultTotalSessions">5 Aktivitas</span>
+                </div>
+                <div class="res-stat">
+                  <span class="res-stat-label">Break</span>
+                  <span class="res-stat-val" id="resultBreakTime">15 Menit</span>
+                </div>
+              </div>
+
+              <!-- Recommendation Card -->
+              <div class="result-recommendation-box">
+                <div class="rec-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                <div class="rec-content">
+                  <h4>Rekomendasi Strategis NEXA:</h4>
+                  <p id="resultRecommendationText">Fokus pada materi persamaan kuadrat terlebih dahulu dan sisipkan jeda singkat untuk menjaga retensi memori.</p>
+                </div>
+              </div>
+
+              <!-- Why This First Reasoning -->
+              <div class="result-reasoning-box">
+                <h4><i class="fa-solid fa-circle-question text-cyan"></i> Mengapa Urutan Ini? (AI Reasoning):</h4>
+                <p id="resultReasoningText">Ujian memiliki batas waktu besok pagi dan dampak nilai tinggi. Sesi latihan diletakkan setelah review materi agar konsep sudah dipahami terlebih dahulu.</p>
+              </div>
+
+              <!-- Generated Schedule Preview -->
+              <div class="result-schedule-preview">
+                <h4><i class="fa-solid fa-list-ol text-indigo"></i> Pratinjau Timeline:</h4>
+                <div class="preview-timeline-list" id="resultScheduleList">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+
+              <!-- Result Actions -->
+              <div class="result-action-bar">
+                <button class="btn btn-success btn-lg" id="btnApplyGeneratedPlan">
+                  <i class="fa-solid fa-calendar-check"></i>
+                  <span>Terapkan Jadwal Hari Ini ✨</span>
+                </button>
+                <button class="btn btn-secondary" id="btnReanalyzePlan">
+                  <i class="fa-solid fa-arrows-rotate"></i>
+                  <span>Ulang</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: TODAY'S PLAN (TIMELINE & ADAPTIVE REPLANNING) -->
+      <section class="tab-content" id="tab-schedule">
+        <!-- Adaptive Planning Action Banner -->
+        <div class="adaptive-controls-card">
+          <div class="adaptive-header">
+            <div class="adaptive-title-group">
+              <i class="fa-solid fa-sliders text-cyan"></i>
+              <div>
+                <h3>AI Adaptive Planning (Kondisi Berubah?)</h3>
+                <p class="card-subtitle">Jika jadwal terganggu atau waktumu berubah, sesuaikan secara instan.</p>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-glass" id="btnCustomAdaptModal">
+              <i class="fa-solid fa-pen-to-square"></i>
+              <span>Kustom</span>
+            </button>
+          </div>
+
+          <div class="adaptive-quick-buttons">
+            <button class="btn-adapt" data-condition="less_time">
+              <i class="fa-solid fa-hourglass-half"></i>
+              <span>Waktu Berkurang (1 Jam)</span>
+            </button>
+            <button class="btn-adapt" data-condition="tired">
+              <i class="fa-solid fa-battery-quarter"></i>
+              <span>Sedang Lelah (Mode Santai)</span>
+            </button>
+            <button class="btn-adapt" data-condition="late">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+              <span>Terlambat (+30 Menit)</span>
+            </button>
+            <button class="btn-adapt" data-condition="urgent_task">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <span>Tugas Tambahan Baru</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Plan Updated Comparison Banner (Shown after adaptive replanning) -->
+        <div class="plan-updated-banner" id="planUpdatedBanner" style="display: none;">
+          <div class="updated-banner-header">
+            <div class="updated-badge">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <span>PLAN UPDATED ✨</span>
+            </div>
+            <button class="btn-close-banner" id="btnCloseUpdatedBanner" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+
+          <div class="comparison-grid">
+            <div class="comp-col comp-before">
+              <span class="comp-label">Sebelumnya:</span>
+              <span class="comp-val" id="compBeforeTime">2 Jam 30 Menit</span>
+            </div>
+            <div class="comp-col comp-now">
+              <span class="comp-label">Sekarang (Diselaraskan):</span>
+              <span class="comp-val text-emerald" id="compNowTime">1 Jam</span>
+            </div>
+          </div>
+
+          <div class="comp-details-grid">
+            <div class="comp-detail-box removed-box">
+              <div class="comp-detail-title text-rose">
+                <i class="fa-solid fa-arrow-down"></i> Dipangkas / Ditunda:
+              </div>
+              <ul class="comp-list" id="compRemovedList">
+                <li>Review materi opsional</li>
+              </ul>
+            </div>
+
+            <div class="comp-detail-box prioritized-box">
+              <div class="comp-detail-title text-emerald">
+                <i class="fa-solid fa-arrow-up"></i> Tetap Diprioritaskan:
+              </div>
+              <ul class="comp-list" id="compPrioritizedList">
+                <li>Latihan soal penting</li>
+                <li>Latihan materi yang belum dikuasai</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="comp-reason-footer">
+            <i class="fa-solid fa-info-circle text-cyan"></i>
+            <span id="compReasonText">Karena waktu berkurang menjadi 1 jam, NEXA memangkas istirahat panjang dan mempertahankan latihan soal terpenting untuk persiapan ujian.</span>
+          </div>
+        </div>
+
+        <!-- Main Timeline Container -->
+        <div class="schedule-timeline-container">
+          <div class="timeline-header-bar">
+            <div>
+              <h3 id="timelineTitle">Jadwal Rencana Hari Ini</h3>
+              <p class="timeline-subtitle" id="timelineSubtitle">Eksekusi tugas satu per satu. Tandai selesai saat menyelesaikannya.</p>
+            </div>
+            <div class="timeline-actions">
+              <button class="btn btn-sm btn-secondary" id="btnResetCompletedSchedule">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span>Reset</span>
+              </button>
+              <button class="btn btn-sm btn-primary" id="btnNewPlanFromSchedule">
+                <i class="fa-solid fa-plus"></i>
+                <span>Baru</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Vertical Timeline -->
+          <div class="vertical-timeline" id="verticalTimeline">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: TASK MANAGEMENT -->
+      <section class="tab-content" id="tab-tasks">
+        <!-- Task Filter & Action Bar -->
+        <div class="task-filter-bar">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="taskSearchInput" placeholder="Cari nama tugas...">
+          </div>
+
+          <div class="filter-group">
+            <button class="filter-btn active" data-filter="all">Semua (<span id="countFilterAll">0</span>)</button>
+            <button class="filter-btn" data-filter="pending">Belum Selesai (<span id="countFilterPending">0</span>)</button>
+            <button class="filter-btn" data-filter="high"><span class="dot-high"></span> Tinggi</button>
+            <button class="filter-btn" data-filter="medium"><span class="dot-medium"></span> Sedang</button>
+            <button class="filter-btn" data-filter="low"><span class="dot-low"></span> Rendah</button>
+          </div>
+
+          <button class="btn btn-primary" id="btnAddTaskFromManager">
+            <i class="fa-solid fa-plus"></i>
+            <span>Tambah Tugas</span>
+          </button>
+        </div>
+
+        <!-- Tasks Grid -->
+        <div class="tasks-grid" id="tasksGrid">
+          <!-- Injected via JS -->
+        </div>
+      </section>
+
+      <!-- TAB 5: ASK NEXA CONSULTATION HUB -->
+      <section class="tab-content" id="tab-ask">
+        <div class="chat-container">
+          <div class="chat-header">
+            <div class="chat-avatar">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <div class="chat-header-info">
+              <h3>NEXA Consultation Hub</h3>
+              <p>Konsultasikan kendala atau perubahan situasi secara langsung.</p>
+            </div>
+            <div class="chat-header-badge">
+              <span class="status-indicator online"></span>
+              <span>Online AI</span>
+            </div>
+          </div>
+
+          <!-- Suggested Questions -->
+          <div class="chat-suggestions">
+            <span class="suggestion-label"><i class="fa-solid fa-lightbulb text-warning"></i> Coba tanyakan:</span>
+            <button class="suggestion-pill" data-ask="Aku merasa lelah sekali hari ini, bagaimana mengatur jadwalku?">"Aku merasa lelah sekali hari ini"</button>
+            <button class="suggestion-pill" data-ask="Ada tugas tambahan mendadak dari guru deadline besok.">"Ada tugas tambahan mendadak"</button>
+            <button class="suggestion-pill" data-ask="Aku cuma punya waktu 30 menit sebelum pergi.">"Aku cuma punya waktu 30 menit"</button>
+          </div>
+
+          <!-- Chat Messages Area -->
+          <div class="chat-messages" id="chatMessages">
+            <div class="message-bubble bot-message">
+              <div class="msg-avatar">
+                <i class="fa-solid fa-brain"></i>
+              </div>
+              <div class="msg-content">
+                <div class="msg-author">NEXA Assistant</div>
+                <p>Halo! 👋 Aku siap mendengarkan situasimu hari ini. Ada perubahan jadwal, tugas mendadak, atau kamu merasa butuh penyesuaian waktu belajar? Ketik saja kondisimu!</p>
+                <span class="msg-time">Sekarang</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Input Form -->
+          <form class="chat-input-area" id="chatForm">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Ketik pesan atau kondisimu ke NEXA..." autocomplete="off">
+            <button type="submit" class="btn btn-primary btn-chat-send" id="btnSendChat">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Mobile Bottom Navigation Bar (Ultra-responsive) -->
+  <nav class="mobile-bottom-nav">
+    <button class="mobile-nav-item active" data-tab="dashboard">
+      <i class="fa-solid fa-chart-pie"></i>
+      <span>Dashboard</span>
+    </button>
+    <button class="mobile-nav-item" data-tab="planner">
+      <i class="fa-solid fa-wand-magic-sparkles"></i>
+      <span>Planner</span>
+    </button>
+    <button class="mobile-nav-item" data-tab="schedule">
+      <i class="fa-solid fa-calendar-day"></i>
+      <span>Jadwal</span>
+      <span class="mobile-badge-dot" id="mobileScheduleDot"></span>
+    </button>
+    <button class="mobile-nav-item" data-tab="tasks">
+      <i class="fa-solid fa-list-check"></i>
+      <span>Tugas</span>
+    </button>
+    <button class="mobile-nav-item" data-tab="ask">
+      <i class="fa-solid fa-comments"></i>
+      <span>Ask AI</span>
+    </button>
+  </nav>
+
+  <!-- MODAL 1: ADD / EDIT TASK -->
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <i class="fa-solid fa-list-check text-primary"></i>
+          <h3 id="taskModalTitle">Tambah Tugas Baru</h3>
+        </div>
+        <button class="btn-close-modal" id="btnCloseTaskModal" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form id="taskForm" class="modal-body">
+        <input type="hidden" id="taskIdInput">
+
+        <div class="form-group">
+          <label for="taskTitleInput" class="form-label required">Nama Tugas / Kegiatan</label>
+          <input type="text" id="taskTitleInput" class="form-control" placeholder="Contoh: Belajar Matematika" required>
+        </div>
+
+        <div class="form-group">
+          <label for="taskDescInput" class="form-label">Deskripsi Singkat</label>
+          <input type="text" id="taskDescInput" class="form-control" placeholder="Contoh: Latihan soal persamaan kuadrat bab 3">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="taskDeadlineInput" class="form-label required">Deadline</label>
+            <input type="date" id="taskDeadlineInput" class="form-control" required>
+          </div>
+          <div class="form-group col-6">
+            <label for="taskDurationInput" class="form-label required">Estimasi Waktu (Menit)</label>
+            <input type="number" id="taskDurationInput" class="form-control" min="5" step="5" value="60" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="taskPrioritySelect" class="form-label required">Tingkat Kepentingan</label>
+            <select id="taskPrioritySelect" class="form-control">
+              <option value="HIGH">🔴 Tinggi (High Priority)</option>
+              <option value="MEDIUM" selected>🟡 Sedang (Medium Priority)</option>
+              <option value="LOW">🟢 Rendah (Low Priority)</option>
+            </select>
+          </div>
+          <div class="form-group col-6">
+            <label for="taskCategorySelect" class="form-label">Kategori</label>
+            <select id="taskCategorySelect" class="form-control">
+              <option value="STUDY">📚 Belajar / Akademik</option>
+              <option value="PROJECT">💻 Proyek / Coding</option>
+              <option value="CHORE">🧹 Rumah / Pribadi</option>
+              <option value="EXERCISE">🏃 Olahraga / Kesehatan</option>
+              <option value="OTHER">📌 Lainnya</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="taskNotesInput" class="form-label">Catatan Tambahan untuk AI</label>
+          <textarea id="taskNotesInput" class="form-control" rows="2" placeholder="Contoh: Saya masih belum memahami materi persamaan kuadrat, butuh review rumus dulu."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelTaskModal">Batal</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveTask">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span>Simpan Tugas</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: CUSTOM ADAPTIVE CONDITION -->
+  <div class="modal-overlay" id="customAdaptModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <i class="fa-solid fa-sliders text-cyan"></i>
+          <h3>Sesuaikan Kondisi Baru</h3>
+        </div>
+        <button class="btn-close-modal" id="btnCloseCustomAdaptModal" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <p class="text-muted">Jelaskan perubahan situasimu, maka NEXA akan melakukan penyesuaian jadwal secara cerdas.</p>
+
+        <div class="form-group">
+          <label for="customConditionInput" class="form-label required">Kondisi Terbaru:</label>
+          <textarea id="customConditionInput" class="form-control" rows="3" placeholder="Contoh: Ternyata aku hanya punya waktu 45 menit sebelum ada panggilan mendadak."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Pilihan Cepat:</label>
+          <div class="quick-tags">
+            <button class="tag-btn" data-text="Saya hanya punya waktu 45 menit.">⏱️ 45 Menit</button>
+            <button class="tag-btn" data-text="Saya merasa mengantuk dan butuh istirahat lebih cepat.">😴 Mengantuk</button>
+            <button class="tag-btn" data-text="Saya ingin fokus 100% pada latihan soal matematika saja.">🎯 Hanya Matematika</button>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelCustomAdapt">Batal</button>
+          <button type="button" class="btn btn-primary" id="btnSubmitCustomAdapt">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Jadwalkan Ulang dengan AI</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Confetti Canvas for celebration -->
+  <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+  <!-- Script -->
+  <script src="script.js"></script>
+</body>
+</html>
