@@ -2417,17 +2417,19 @@ textarea.form-control {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .tasks-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .adaptive-quick-buttons {
     grid-template-columns: repeat(2, 1fr);
   }
-}
 
-@media (max-width: 992px) {
+  /* ==============================
+     TABLET + MOBILE LAYOUT
+     ============================== */
+
   .sidebar {
     display: none;
   }
@@ -2447,7 +2449,8 @@ textarea.form-control {
   .main-content {
     margin-left: 0;
     width: 100%;
-    padding: 16px 16px 84px; /* clearance for bottom navigation */
+    max-width: none;
+    padding: 16px 16px 84px;
   }
 
   .planner-layout {
@@ -2463,6 +2466,53 @@ textarea.form-control {
   }
 }
 
+@media (max-width: 768px) {
+  .main-content {
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 88px;
+  }
+
+  .glass-card,
+  .schedule-timeline-container {
+    padding: 16px;
+  }
+
+  .greeting-banner {
+    padding: 18px 16px;
+  }
+
+  .greeting-title {
+    font-size: 1.4rem;
+  }
+
+  .card-header {
+    gap: 10px;
+  }
+
+  .card-title-group h3 {
+    font-size: 1rem;
+  }
+
+  .timeline-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .tl-main-info {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .tl-title,
+  .tl-tips-text {
+    overflow-wrap: anywhere;
+  }
+
+  .message-bubble {
+    max-width: 88%;
+  }
+}
 @media (max-width: 768px) {
   .greeting-banner {
     flex-direction: column;
