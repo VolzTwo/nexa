@@ -8,7 +8,7 @@
 // KONFIGURASI GEMINI API
 // Masukkan Google Gemini API Key Anda di bawah ini jika ingin menggunakan live API.
 // Jika dibiarkan default, NEXA akan otomatis menggunakan Autonomous Smart Offline Engine.
-const GEMINI_API_KEY = "AQ.Ab8RN6I9OMYlTjucidal7A5P1sCF2925UFow0zL6oA2Hvjq2vw";
+const GEMINI_API_KEY = "";
 const GEMINI_MODEL = "gemini-3-flash-preview";
 
 // System Prompt NEXA untuk Gemini API
